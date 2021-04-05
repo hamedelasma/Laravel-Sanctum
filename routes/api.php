@@ -21,3 +21,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //Route::get('product',[ProductController::class,'index']);
 //Route::post('product',[ProductController::class,'store']);
 Route::resource('product', ProductController::class);
+Route::get('product/search/{search}',[ProductController::class,'search']);
