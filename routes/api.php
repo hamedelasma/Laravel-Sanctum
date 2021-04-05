@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 //Route::resource('product', ProductController::class);
 //Public Routes
+Route::post('register',[AuthController::class,'register']);
+Route::post('login',[AuthController::class,'login']);
 Route::get('product',[ProductController::class,'index']);
 Route::get('product/{id}',[ProductController::class,'show']);
 Route::get('product/search/{search}',[ProductController::class,'search']);
@@ -30,5 +33,5 @@ Route::group(['middleware'=>['auth:sanctum']], function () {
     Route::post('product',[ProductController::class,'store']);
     Route::match(['put','patch'],'product/{product}',[ProductController::class,'update']);
     Route::delete('product/{product}',[ProductController::class,'destroy']);
-
+    Route::post('logout',[AuthController::class,'logout']);
 });
