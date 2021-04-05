@@ -25,6 +25,12 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'slug' => 'required',
+            'price' => 'required'
+        ]);
+
         return Product::create($request->all());
     }
 
@@ -36,7 +42,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        return Product::findOrFail($id);
     }
 
     /**
@@ -48,7 +54,10 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product=Product::findOrFail($id);
+         $product->update($request->all());
+        return $product;
+
     }
 
     /**
@@ -59,6 +68,6 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Product::destroy($id);
     }
 }
