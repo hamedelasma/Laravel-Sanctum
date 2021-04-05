@@ -18,7 +18,17 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-//Route::get('product',[ProductController::class,'index']);
-//Route::post('product',[ProductController::class,'store']);
-Route::resource('product', ProductController::class);
+//Route::resource('product', ProductController::class);
+//Public Routes
+Route::get('product',[ProductController::class,'index']);
+Route::get('product/{id}',[ProductController::class,'show']);
 Route::get('product/search/{search}',[ProductController::class,'search']);
+
+
+//Private Routes
+Route::group(['middleware'=>['auth:sanctum']], function () {
+    Route::post('product',[ProductController::class,'store']);
+    Route::match(['put','patch'],'product/{product}',[ProductController::class,'update']);
+    Route::delete('product/{product}',[ProductController::class,'destroy']);
+
+});
